@@ -60,9 +60,10 @@
 
 ;; TODO: why the backquote: "N.B. backtick and comma allow evaluation of expression when forming list"
 (setq org-capture-templates `(
-	("p" "Protocol" entry (file+headline "~/org/notes.org" "Inbox")
-        "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?" :empty-lines 1)
-	("L" "Protocol Link" entry (file+headline "~/org/notes.org" "Inbox")
+	("p" "Protocol" entry (file+headline "~/jft/projects/jft/org/captured.org" "Captured via the web, org-protocol")
+        "* %^{Title}\nSource: %:link, %c\n\nCaptured On: %U #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?" :empty-lines 1)
+
+	("L" "Protocol Link" entry (file+headline "~/jft/projects/jft/org/captured.org" "Captured via the web, org-protocol")
         "* %? [[%:link][%:description]] \nCaptured On: %U" :empty-lines 1)
 ))
 
