@@ -9,8 +9,15 @@
 	     '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (load "desktop")
-(desktop-load-default)
-(desktop-read)
+;;disabled for 27.x on 2020-06-27 (desktop-load-default)
+;;disabled for 27.x on 2020-06-27 (desktop-read)
+(desktop-save-mode 1) ;; added 2020-06-27
+
+;;  via https://www.emacswiki.org/emacs/Desktop#toc5
+(setq desktop-path '("~/.emacs.d/"))
+(setq desktop-dirname "~/.emacs.d/")
+(setq desktop-base-file-name "emacs-desktop")
+
 
 (put 'downcase-region 'disabled nil)
 (custom-set-variables
@@ -24,7 +31,7 @@
  '(inhibit-default-init t)
  '(org-agenda-files
    (quote
-    ("~/jft/projects/main/main.org" "~/jft/projects/tigue_com/tigue_com.org" "~/jft/projects/jft/money.org" "~/jft/projects/main/disfrutar.org")))
+    ("~/jft/projects/jft/roles/whore/whore.org" "~/jft/projects/jft/org/money.org" "~/jft/projects/main/transport.org" "~/jft/projects/main/main.org" "~/jft/projects/tigue_com/tigue_com.org" "~/jft/projects/main/disfrutar.org")))
  '(package-selected-packages
    (quote
     (ein beacon htmlize rjsx-mode zenburn-theme anti-zenburn-theme))))
@@ -61,10 +68,10 @@
 ;; TODO: why the backquote: "N.B. backtick and comma allow evaluation of expression when forming list"
 (setq org-capture-templates `(
 	("p" "Protocol" entry (file+headline "~/jft/projects/jft/org/captured.org" "Captured via the web, org-protocol")
-        "* %^{Title}\nSource: %:link, %c\n\nCaptured On: %U #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?" :empty-lines 1)
+         "* %^{Title}\nSource: %:link\nCaptured: %U\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?" :empty-lines 1)
 
 	("L" "Protocol Link" entry (file+headline "~/jft/projects/jft/org/captured.org" "Captured via the web, org-protocol")
-        "* %? [[%:link][%:description]] \nCaptured On: %U" :empty-lines 1)
+        "* %? [[%:link][%:description]] \nCaptured: %U" :empty-lines 1)
 ))
 
 (setq org-return-follows-link t)
@@ -90,12 +97,13 @@
 ;;    original: (add-to-list 'auto-mode-alist '(".*\.js\'" . rjsx-mode))
 ;; 2. https://www.emacswiki.org/emacs/AutoLoad
 ;;    This seemed to work: (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-(add-hook 'rjsx-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil) ;;Use space instead of tab
-            (setq js-indent-level 2) ;;space width is 2 (default is 4)
-            (setq js2-strict-missing-semi-warning nil))) ;;disable the semicolon warning TODO: do I really want that?
+;; JFT [2020-06-27] disabling next 6 to test new JSX parser
+;;(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+;;(add-hook 'rjsx-mode-hook
+;;          (lambda ()
+;;            (setq indent-tabs-mode nil) ;;Use space instead of tab
+;;            (setq js-indent-level 2) ;;space width is 2 (default is 4)
+;;            (setq js2-strict-missing-semi-warning nil))) ;;disable the semicolon warning TODO: do I really want that?
 
 ;; JFT [2019-09-06] committing to various recent finds
 (setq org-duration-format (quote h:mm))
@@ -115,5 +123,44 @@
 ;; https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
 (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
 
+
+;; [2020-06-27] for <s and <q to work again
+(require 'org-tempo)
+
+;; via https://orgmode.org/manual/Editing-Source-Code.html
+(setq org-src-block-faces '(("emacs-lisp" (:background "#EEE2FF"))
+                            ("python" (:background "#E5FFB8"))))
+
+
+
+;; https://github.com/gregsexton/ob-ipython/issues/52
+;;(setq exec-path (append exec-path '("/usr/local/bin/")))
+
+;; via https://emacs.stackexchange.com/a/22732/15536
+;;(require 'ob-ipython)
+
+;; via http://cachestocaches.com/2018/6/org-literate-programming/
+  ;; Run/highlight code using babel in org-mode
+;;  (org-babel-do-load-languages
+;;   'org-babel-load-languages
+;;   '(
+;;     (python . t)
+;;     (ipython . t)
+;;     (sh . t)
+ ;;    (shell . t)
+     ;; Include other languages here...
+;;     ))
+  ;; Syntax highlight in #+BEGIN_SRC blocks
+  (setq org-src-fontify-natively t)
+  ;; Don't prompt before running code in org
+  (setq org-confirm-babel-evaluate nil)
+  ;; Fix an incompatibility between the ob-async and ob-ipython packages
+;;  (setq ob-async-no-async-languages-alist '("ipython"))
+
+
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
 
 (message "end of .emacs reached successfully")
