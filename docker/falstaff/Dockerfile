@@ -1,0 +1,16 @@
+
+# TODO: FROM puck
+
+# FROM alpine:3.7
+# RUN apk update && apk add \
+#    pandoc
+# TODO: Would have gotten overcomplicated as a starter project, but doable https://github.com/skyzyx/alpine-pandoc
+
+FROM ubuntu:18.04
+
+RUN apt-get update && apt-get install -y \
+    pandoc \
+    python3-pip
+
+RUN pip3 install nbconvert
+

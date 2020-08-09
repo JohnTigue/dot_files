@@ -1,0 +1,5 @@
+* Docker images
+
+There are two Docker images here, [[puck/Readme.org][puck]] and [[falstaff/Readme.org][falstaff]]:
+- puck is small and quick
+- falstaff is a more interesting big fatty (and proud of it, thank you very much)

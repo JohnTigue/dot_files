@@ -1,0 +1,26 @@
+* Falstaff
+
+#+CAPTION: Adolf Schrödter's Falstaff and his page
+[[./schrödter_falstaff.jpg]]
+
+
+This is Tigue's big, generic, kitchen-sink devel(opment) Docker image. Its
+companion is [[../puck/Readme.org][Puck]], which is a much more minimal Docker image
+containing only for quick, small, transient tasks.
+ 
+Note this a development Docker image. Production would not require,
+say, a text editor such as emacs.
+
+| Tool   | Purpose                        |
+|--------+--------------------------------|
+| emacs  | Edit all the things            |
+| tree   | Peek at file tree              |
+|        |                                |
+
+
+** Open questions
+- python
+  -  Just part of ubuntu:18.04?
+  - Or ~FROM python:3~
+
+

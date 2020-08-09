@@ -1,0 +1,33 @@
+* Puck Docker image
+
+[[./puck.jpg]]
+
+Brian Froud's Puck
+
+This is Tigue's minimalist devel(opment) Docker image. Its companion
+is [[../falstaff/Readme.org][falstaff]], which does not aim to be small and agile, rather falstaff adds
+any old tool via a kitchen sink mentality.
+
+[[https://en.wikipedia.org/wiki/Puck_(folklore)#Characteristics][Quoting Wikipedia]]:
+#+begin_quote
+If you had the knack, Puck might do minor housework for you, quick
+fine needlework or butter-churning, which could be undone in a moment
+by his knavish tricks if you displeased him
+#+end_quote
+
+
+[[https://docs.docker.com/develop/develop-images/dockerfile_best-practices/][Best practices for writing Dockerfiles]]:
+#+begin_quote
+Inadvertently including files that are not necessary for building an
+image results in a larger build context and larger image size. This
+can increase the time to build the image, time to pull and push it,
+and the container runtime size.
+#+end_quote
+
+Puck's parent image is Aline, because accoring to [[https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#dockerfile-instructions][doc.docker.com]]:
+#+begin_quote
+Whenever possible, use current official images as the basis for your
+images. We recommend the Alpine image as it is tightly controlled and
+small in size (currently under 5 MB), while still being a full Linux
+distribution.
+#+end_quote
