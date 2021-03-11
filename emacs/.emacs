@@ -17,16 +17,16 @@
 
 ;; JFT added on 2017-09-20
 (require 'package)
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/") t)
-
+;; JFT 2021-03-10: (add-to-list 'package-archives
+;; JFT 2021-03-10:              '("org" . "http://orgmode.org/elpa/") t)
+;; JFT 2021-03-10: 
 ;; JFT 2016-09-22 for markdown-mode
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 ;; and now back to pre-2016-09-22...
 
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; JFT 2021-03-10: (add-to-list 'package-archives
+;; JFT 2021-03-10:              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; 2021-01-26: slime disabled
 ;;(unless (package-installed-p 'scala-mode2)
@@ -37,10 +37,16 @@
 ;; end of 2014-09-27 ensime setup
 
 
+;; JFT 2006-06-13: getting flyspell to work on Dell
+;; JFT 2011-11-28 disabled: (setq-default ispell-program-name "aspell")
 ;; JFT 2013-02-13 getting spellcheck working on mac os x 10.6.8 as per http://www.emacswiki.org/emacs/CocoAspell
 (setq ispell-program-name "aspell")
+;; (setq ispell-program-name "/usr/local/bin/aspell")
 ;; JFT 2014-12-01 migrated to using brew install aspell (add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path "/usr/local/Cellar/aspell/0.60.6.1/bin")
+
+;; JFT 2021-03-10: disables b/c brew just puts aspell properly on path
+;;(add-to-list 'exec-path "/usr/local/Cellar/aspell/0.60.6.1/bin")
+
 (setq ispell-dictionary "english"
       ispell-dictionary-alist
       (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil
@@ -234,9 +240,6 @@
 ;; JFT 2004-03-01 Ant Console. No, that's ant-mode. which does what?
 ;;(load "ant")
 
-;; JFT 2006-06-13: getting flyspell to work on Dell
-;; JFT 2011-11-28 disabled: (setq-default ispell-program-name "aspell")
-
 ;; JFT 2009-08-24: get rid of silly toolbar
 (tool-bar-mode 0)
 
@@ -300,7 +303,8 @@
      (file . find-file)
      (wl . wl-other-frame)))
  '(org-priority-faces '((65 . "#a02020") (66 . "#900007") (67 . "#5d0000")))
- '(package-selected-packages '(vdiff beacon exec-path-from-shell anti-zenburn-theme))
+ '(package-selected-packages
+   '(lsp-mode vdiff beacon exec-path-from-shell anti-zenburn-theme))
  '(split-width-threshold 135))
 
 ;; 2015-04-10: Umm, what happend to the visible bell setting? 2015-05-10 it's working
@@ -394,6 +398,7 @@
 
 ;; 2021-02-20: re-added https://github.com/Malabarba/beacon
 (beacon-mode 1)
+(setq beacon-push-mark 35)
 (setq beacon-color "#666600")
 
 ;;; 2021-02-25 auto-save files should all go to one directory, to be out of the way
