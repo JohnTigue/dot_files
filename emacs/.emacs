@@ -80,9 +80,9 @@
       ("t" "Triage later" entry
         (file+olp+datetree "~/at/main/org/capture_main.org" "Triage") "* TODO %^{Headline}" :immediate-finish t )
       ("p" "URL Link & Quote" entry
-        (file+olp+datetree "~/at/main/org/capture_web.org") "* %:description\nSource: %:link\n #+begin_quote\n%i\n#+end_quote\n\n\n%?")
+        (file+olp+datetree "~/at/main/org/capture_web.org") "* %:description\nSource: %:link\n#+begin_quote\n%i\n#+end_quote\n\n\n%?")
       ("L" "URL Link Only" entry
-        (file+olp+datetree "~/at/main/org/capture_web.org") "* %? [[%:link][%:description]] \nCaptured On: %U")
+        (file+olp+datetree "~/at/main/org/capture_web.org") "* %?[[%:link][%:description]] \nCaptured On: %U")
       ;;("l" "Log Time" entry (file+datetree "~/jft/projects/jft/roles/exec/time-log.org") "** %U - %^{Activity}  :TIME:") 
       ;;("m" "Music" table-line (file+headline "~/org/capture.org" "Music heard") "| %^{Artist} | %^{Song} | %? |")
   )))
