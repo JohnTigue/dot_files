@@ -3,6 +3,7 @@
 ;; 2021-01-28 cleaned up PATH issues https://github.com/purcell/exec-path-from-shell
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+
 ;; 2021-01-28 disabled(message "In JFT .emacs. at head. exec-path=%s" exec-path)
 ;; 2021-01-28 disabled(message "In JFT .emacs. at head. $PATH=%s" (getenv "PATH"))
 ;; 2021-01-28 disabled(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
@@ -12,21 +13,15 @@
 ;; "in Emacs≥27, package-initialize is done for you before the beginning of the .emacs file."
 ;; 2021-01-28 disabled: (package-initialize)
 
-;; JFT added on 2014-09-27 as per https://github.com/hvesalai/scala-mode2 and http://www.viksit.com/tags/scala/setting-up-emacs-ensime-sbt-for-scala-code/
-(require 'package)
-
 ;; JFT added on 2017-09-20
 (require 'package)
-;; JFT 2021-03-10: (add-to-list 'package-archives
-;; JFT 2021-03-10:              '("org" . "http://orgmode.org/elpa/") t)
-;; JFT 2021-03-10: 
-;; JFT 2016-09-22 for markdown-mode
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
-;; and now back to pre-2016-09-22...
-
-;; JFT 2021-03-10: (add-to-list 'package-archives
-;; JFT 2021-03-10:              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  '("org" . "http://orgmode.org/elpa/") t)
+;; (add-to-list 'package-archives
+;;   '("melpa-stable" . "https://stable.melpa.org/packages/"))
+;; JFT 2021-03-10 added:
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/"))
 
 ;; 2021-01-26: slime disabled
 ;;(unless (package-installed-p 'scala-mode2)
