@@ -4,6 +4,7 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+
 ;; 2021-01-28 disabled(message "In JFT .emacs. at head. exec-path=%s" exec-path)
 ;; 2021-01-28 disabled(message "In JFT .emacs. at head. $PATH=%s" (getenv "PATH"))
 ;; 2021-01-28 disabled(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
@@ -13,15 +14,20 @@
 ;; "in Emacs≥27, package-initialize is done for you before the beginning of the .emacs file."
 ;; 2021-01-28 disabled: (package-initialize)
 
-;; JFT added on 2017-09-20
+
 (require 'package)
-(add-to-list 'package-archives
-  '("org" . "http://orgmode.org/elpa/") t)
+(add-to-list
+  'package-archives
+  '("org" . "https://orgmode.org/elpa/") t)
 ;; (add-to-list 'package-archives
 ;;   '("melpa-stable" . "https://stable.melpa.org/packages/"))
-;; JFT 2021-03-10 added:
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
+(add-to-list
+  'package-archives
+  '("melpa" . "https://melpa.org/packages/"))
+(add-to-list
+  'package-archives
+  '("gnu" . "https://elpa.gnu.org/packages/"))
+
 
 ;; 2021-01-26: slime disabled
 ;;(unless (package-installed-p 'scala-mode2)
@@ -32,16 +38,8 @@
 ;; end of 2014-09-27 ensime setup
 
 
-;; JFT 2006-06-13: getting flyspell to work on Dell
-;; JFT 2011-11-28 disabled: (setq-default ispell-program-name "aspell")
-;; JFT 2013-02-13 getting spellcheck working on mac os x 10.6.8 as per http://www.emacswiki.org/emacs/CocoAspell
+;; JFT 2013-02-13 getting spellcheck working on mac os x as per http://www.emacswiki.org/emacs/CocoAspell
 (setq ispell-program-name "aspell")
-;; (setq ispell-program-name "/usr/local/bin/aspell")
-;; JFT 2014-12-01 migrated to using brew install aspell (add-to-list 'exec-path "/usr/local/bin")
-
-;; JFT 2021-03-10: disables b/c brew just puts aspell properly on path
-;;(add-to-list 'exec-path "/usr/local/Cellar/aspell/0.60.6.1/bin")
-
 (setq ispell-dictionary "english"
       ispell-dictionary-alist
       (let ((default '("[A-Za-z]" "[^A-Za-z]" "[']" nil
@@ -76,22 +74,18 @@
 ;; ;; JFT 2011-01-20: end of bit about nxml-mode working on a mac. Everything below is old .emacs
 
 
-;; JFT 2013-04-29: this was before I started hacking
-;;'(org-capture-templates (quote (("l" "Log Time" entry (file+datetree "~/jft/projects/jft/roles/exec/time-log.org") "** %U - %^{Activity}  :TIME:"))))
-;;(setq org-capture-templates nil)
-;; ok: (setq org-capture-templates (quote (("l" "Log Time" entry (file+datetree "~/jft/projects/jft/roles/exec/time-log.org") "** %U - %^{Activity}  :TIME:")))   )
 (setq org-capture-templates 
   (quote 
-   (                                                                               
-    ("t" "Triage later" entry (file+olp+datetree "~/at/main/org/capture_main.org" "Triage") "* TODO %^{Headline}" :immediate-finish t )
-    ("p" "URL Link & Quote" entry (file+olp+datetree "~/at/main/org/capture_web.org") "* %:description\nSource: %:link\n #+begin_quote\n%i\n#+end_quote\n\n\n%?")
-    ("L" "URL Link Only" entry (file+olp+datetree "~/at/main/org/capture_web.org") "* %? [[%:link][%:description]] \nCaptured On: %U")
-
-    ;;("l" "Log Time" entry (file+datetree "~/jft/projects/jft/roles/exec/time-log.org") "** %U - %^{Activity}  :TIME:") 
-    ;;("m" "Music" table-line (file+headline "~/org/capture.org" "Music heard") "| %^{Artist} | %^{Song} | %? |")
-)))
-
-
+    (                                                                               
+      ("t" "Triage later" entry
+        (file+olp+datetree "~/at/main/org/capture_main.org" "Triage") "* TODO %^{Headline}" :immediate-finish t )
+      ("p" "URL Link & Quote" entry
+        (file+olp+datetree "~/at/main/org/capture_web.org") "* %:description\nSource: %:link\n #+begin_quote\n%i\n#+end_quote\n\n\n%?")
+      ("L" "URL Link Only" entry
+        (file+olp+datetree "~/at/main/org/capture_web.org") "* %? [[%:link][%:description]] \nCaptured On: %U")
+      ;;("l" "Log Time" entry (file+datetree "~/jft/projects/jft/roles/exec/time-log.org") "** %U - %^{Activity}  :TIME:") 
+      ;;("m" "Music" table-line (file+headline "~/org/capture.org" "Music heard") "| %^{Artist} | %^{Song} | %? |")
+  )))
 
 
 (custom-set-faces
@@ -203,15 +197,6 @@
                (make-local-variable 'write-contents-hooks)
                (add-hook 'write-contents-hooks 'java-mode-untabify)))
 ;; end as per http://www.jwz.org/doc/tabs-vs-spaces.html
-;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;; JFT 2011-01-20: commented this block out b/c not on windows any more and nxml is loaded above
-;;;; JFT 2004-01-31 nXML mode
-;;(load "C:/bin/emacs-22.3/nxml-mode-20041004/rng-auto.el")
-;;(setq auto-mode-alist
-;;        (cons '("\\.\\(jspx\\|dbx\\|xml\\|xslt\\|xsl\\|rng\\|xhtml\\)\\'" . nxml-mode)
-;;	      auto-mode-alist))
 
 
 ;; Desktop: files and points saver
@@ -223,7 +208,6 @@
 ;;(load "desktop")
 ;;(desktop-load-default)
 ;;(desktop-read)
-
 
 
 ;; JFT 2004-02-25 hacking desparately to get accidental clicks on
@@ -256,10 +240,11 @@
 ;; JFT disabled on 2013-02-28 (add-to-list 'load-path "/Users/john/.emacs.d/site-lisp/org-7.7/lisp")
 (require 'org-install)
 (require 'org) ;; without this org-directory is undefined: Symbol's value as variable is void: org-directory
-;;  and now can setup capture:
+
+;;  and now can setup capture: JFT-TODO is org-directory set? I.e. where is this concat'd filename going
 (setq org-default-notes-file (concat org-directory "/notes.org"))
+
 (define-key global-map "\C-cc" 'org-capture)
-;;...
 (setq org-return-follows-link t)
 
 ;; JFT 2013-04-26 setting up org-protocol to receive org-mode info from external programs
@@ -388,7 +373,7 @@
 ;; https://emacs.stackexchange.com/a/393/15536
 (setq-default cursor-type 'bar) 
 
-;; For template expansion in org: https://orgmode.org/manual/Structure-Templates.html
+;; For template expansion (i.e. <q, <s, etc.) in org: https://orgmode.org/manual/Structure-Templates.html
 (require 'org-tempo)
 
 ;; 2021-02-20: re-added https://github.com/Malabarba/beacon
