@@ -268,7 +268,7 @@
  '(custom-safe-themes
    '("5f6eea84fb7ecacd74cd8d61e59e3839a2815f455313917c3c7a6521329cfdd4" "cab317d0125d7aab145bc7ee03a1e16804d5abdfa2aa8738198ac30dc5f7b569" "bea5fd3610ed135e6ecc35bf8a9c27277d50336455dbdd2969809f7d7c1f7d79" "599f1561d84229e02807c952919cd9b0fbaa97ace123851df84806b067666332" "5cd0afd0ca01648e1fff95a7a7f8abec925bd654915153fb39ee8e72a8b56a1f" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "39dd7106e6387e0c45dfce8ed44351078f6acd29a345d8b22e7b8e54ac25bac4" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" "3e335d794ed3030fefd0dbd7ff2d3555e29481fe4bbb0106ea11c660d6001767" "cc0dbb53a10215b696d391a90de635ba1699072745bf653b53774706999208e3" "bfdcbf0d33f3376a956707e746d10f3ef2d8d9caa1c214361c9c08f00a1c8409" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "39fe48be738ea23b0295cdf17c99054bb439a7d830248d7e6493c2110bfed6f8" "bb4733b81d2c2b5cdec9d89c111ef28a0a8462a167d411ced00a77cfd858def1" "12b7ed9b0e990f6d41827c343467d2a6c464094cbcc6d0844df32837b50655f9" default))
  '(inhibit-startup-screen t)
- '(js2-basic-offset 2 t)
+ '(js2-basic-offset 2)
  '(js2-indent-switch-body t)
  '(js2-mode-indent-ignore-first-tab t)
  '(org-agenda-files
@@ -284,7 +284,7 @@
      (wl . wl-other-frame)))
  '(org-priority-faces '((65 . "#a02020") (66 . "#900007") (67 . "#5d0000")))
  '(package-selected-packages
-   '(lsp-mode vdiff beacon exec-path-from-shell anti-zenburn-theme))
+   '(company web-mode lsp-ui js2-mode use-package lsp-mode vdiff beacon exec-path-from-shell anti-zenburn-theme))
  '(split-width-threshold 135))
 
 ;; 2015-04-10: Umm, what happend to the visible bell setting? 2015-05-10 it's working
@@ -396,6 +396,60 @@
 
 ;;; [2021-03-07, experimenting with todo-keywords for Kanban
 (setq org-todo-keywords '((sequence "TODO" "DOIN" "DONE")))
+
+
+;;; LSP and TypeScript
+
+(use-package lsp-mode
+   :defer t
+   :diminish lsp-mode
+   :hook (((js2-mode rjsx-mode) . lsp))
+   :commands lsp
+   :config
+   (setq lsp-auto-configure t
+         lsp-auto-guess-root t
+         ;; don't set flymake or lsp-ui so the default linter doesn't get trampled
+         lsp-diagnostic-package :none)
+   ;;; keybinds after load
+   (evil-leader/set-key
+     "jd"  #'lsp-goto-type-definition ; (j)ump to (d)efinition
+     "jb"  #'xref-pop-marker-stack)   ; (j)ump (b)ack to marker
+  )
+(use-package company-lsp
+  :defer t
+  :config
+  (setq company-lsp-cache-candidates 'auto
+        company-lsp-async t
+        company-lsp-enable-snippet nil
+        company-lsp-enable-recompletion t)) 
+(use-package lsp-ui
+  :defer t
+  :config
+  (setq lsp-ui-sideline-enable t
+        ;; disable flycheck setup so default linter isn't trampled
+        lsp-ui-flycheck-enable nil
+        lsp-ui-sideline-show-symbol nil
+        lsp-ui-sideline-show-hover nil
+        lsp-ui-sideline-show-code-actions nil
+        lsp-ui-peek-enable nil
+        lsp-ui-imenu-enable nil
+        lsp-ui-doc-enable nil))
+
+(use-package web-mode
+  :ensure t
+  :mode (("\\.js\\'" . web-mode)
+         ("\\.jsx\\'" . web-mode)
+         ("\\.ts\\'" . web-mode)
+         ("\\.tsx\\'" . web-mode)
+         ("\\.html\\'" . web-mode)
+         ("\\.vue\\'" . web-mode)
+      	 ("\\.json\\'" . web-mode))
+        :commands web-mode
+        :config
+        (setq web-mode-content-types-alist
+              '(("jsx" . "\\.js[x]?\\'")))
+        )
+
 
 
 (message "In JFT .emacs, at tail. exec-path=%s" exec-path)
