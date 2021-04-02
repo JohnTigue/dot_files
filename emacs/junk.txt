@@ -1,4 +1,0 @@
-Mic test
-
-
-Why is that .emacs still around? It was git rm'd.
